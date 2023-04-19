@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 public class BlocksDriver {
 
-
     public static void main(String[] args) {
         Scanner stdin = new Scanner(System.in);
         int size = stdin.nextInt();
@@ -29,5 +28,6 @@ public class BlocksDriver {
             }
         }
         System.out.println(problem);
+        stdin.close();
     }
 }
