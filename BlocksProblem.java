@@ -1,5 +1,6 @@
 import java.util.Stack;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class BlocksProblem {
     private int size;
@@ -111,9 +112,13 @@ public class BlocksProblem {
     public String toString(){
         StringBuilder concation = new StringBuilder();
         for(int i = 0; i < size; i++){
+            ArrayList<Integer> reverse = new ArrayList<Integer>();
             concation = concation.append(i + ": ");
             while(!piles[i].empty()){
-                concation = concation.append(piles[i].pop().toString()).append(" ");
+                reverse.add(piles[i].pop());
+            }
+            for(int j = reverse.size()-1; j >= 0; j--){
+                concation = concation.append(reverse.get(j).toString()).append(" ");
             }
             concation = concation.append("\b\n");
         }
