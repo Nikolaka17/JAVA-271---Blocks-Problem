@@ -1,9 +1,7 @@
-import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Arrays;
 
 public class BlocksProblem {
-    private ArrayList<String> commands = new ArrayList<String>();
     private int size;
     private int[] pos;
     private Stack<Integer>[] piles;
@@ -11,30 +9,90 @@ public class BlocksProblem {
     public BlocksProblem(int n){
         size = n;
         pos = new int[n];
-        for(int i = 0; i < n; i++){
-            pos[i] = -1;
-        }
         piles = new Stack[n];
+        for(int i = 0; i < n; i++){
+            pos[i] = i;
+            piles[i] = new Stack<Integer>();
+            piles[i].add(i);
+        }
     }
     
-    public void moveOnto(int a, int b){
-        
+    public void moveOnto(int a, int b)throws IllegalArgumentException{
+        if(isInvalid(a, b)){
+            throw new IllegalArgumentException();
+        }
+        int temp = piles[pos[a]].pop();
+        while(temp != a){
+            piles[temp].push(temp);
+            pos[temp] = temp;
+            temp = piles[pos[a]].pop();
+        }
+        pos[a] = pos[b];
+        while(!piles[pos[b]].peek().equals(b)){
+            temp = piles[pos[b]].pop();
+            piles[temp].push(temp);
+            pos[temp] = temp;
+        }
+        piles[pos[b]].push(a);
     }
     
-    public void moveOver(int a, int b){
-        
+    public void moveOver(int a, int b)throws IllegalArgumentException{
+        if(isInvalid(a, b)){
+            throw new IllegalArgumentException();
+        }
+        int temp = piles[pos[a]].pop();
+        while(temp != a){
+            piles[temp].push(temp);
+            pos[temp] = temp;
+            temp = piles[pos[a]].pop();
+        }
+        pos[a] = pos[b];
+        piles[pos[b]].push(a);
     }
     
-    public void pileOnto(int a, int b){
-        
+    public void pileOnto(int a, int b)throws IllegalArgumentException{
+        if(isInvalid(a, b)){
+            throw new IllegalArgumentException();
+        }
+        Stack<Integer> temp = new Stack<Integer>();
+        temp.push(piles[pos[a]].pop());
+        while(!temp.peek().equals(a)){
+            pos[temp.peek()] = pos[b];
+            temp.push(piles[pos[a]].pop());
+        }
+        pos[a] = pos[b];
+        while(!piles[pos[b]].peek().equals(b)){
+            int temp2 = piles[pos[b]].pop();
+            piles[temp2].push(temp2);
+            pos[temp2] = temp2;
+        }
+        while(!temp.empty()){
+            piles[pos[b]].push(temp.pop());
+        }
     }
     
-    public void pileOver(int a, int b){
-        
+    public void pileOver(int a, int b)throws IllegalArgumentException{
+        if(isInvalid(a, b)){
+            throw new IllegalArgumentException();
+        }
+        Stack<Integer> temp = new Stack<Integer>();
+        temp.push(piles[pos[a]].pop());
+        while(!temp.peek().equals(a)){
+            pos[temp.peek()] = pos[b];
+            temp.push(piles[pos[a]].pop());
+        }
+        pos[a] = pos[b];
+        while(!temp.empty()){
+            piles[pos[b]].push(temp.pop());
+        }
     }
     
     public int getSize(){
         return size;
+    }
+
+    public boolean isInvalid(int a, int b){
+        return a < 0 || b < 0 || a >= size || b >= size || a == b || pos[a] == pos[b];
     }
     
     public int[][] toArray(){
