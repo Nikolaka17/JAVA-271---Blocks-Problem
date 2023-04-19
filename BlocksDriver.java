@@ -26,8 +26,10 @@ public class BlocksDriver {
             }catch(Exception e){
                 
             }
+            command = stdin.nextLine().toLowerCase();
         }
         System.out.println(problem);
         stdin.close();
+        System.exit(0);
     }
 }
