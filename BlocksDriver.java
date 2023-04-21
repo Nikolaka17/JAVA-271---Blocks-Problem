@@ -28,7 +28,7 @@ public class BlocksDriver {
             }
             command = stdin.nextLine().toLowerCase();
         }
-        System.out.println(problem);
+        System.out.print(problem);
         stdin.close();
         System.exit(0);
     }
