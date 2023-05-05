@@ -1,5 +1,13 @@
+//Name: Nikolas Leslie
+//Date created: 
+//Last modified: 5/5/23
+//A program to solve the blocks problem
+
 import java.util.Scanner;
 
+/**
+ * A driver class to run the blocks problem
+ */
 public class BlocksDriver {
 
     public static void main(String[] args) {
